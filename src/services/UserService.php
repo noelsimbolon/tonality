@@ -43,19 +43,17 @@ class UserService extends BaseService
             throw new exceptions\BadRequestException("Username already exists");
         }
 
-        $sqlReturn = $this->repository
-            ->getById(
-                $this->repository->insert($user)
+        if($this->repository->insert($user)) {
+            return new UserModel(
+                array(
+                    'user_id' => $user->get('user_id'),
+                    'username' => $user->get('username'),
+                    'is_admin' => $user->get('is_admin'),
+                )
             );
-
-        $registeredUser = new UserModel(
-            array(
-                'user_id' => $sqlReturn['user_id'],
-                'username' => $sqlReturn['username'],
-            )
-        );
-
-        return $registeredUser;
+        } else {
+            throw new exceptions\BadRequestException("Error while registering user");
+        }
     }
 
     /**
