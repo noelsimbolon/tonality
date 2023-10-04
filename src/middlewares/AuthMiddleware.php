@@ -3,6 +3,7 @@
 namespace middlewares;
 
 require_once ROOT_DIR . "src/bases/BaseMiddleware.php";
+require_once ROOT_DIR . "src/exceptions/ForbiddenException.php";
 
 use exceptions\ForbiddenException,
     bases\BaseMiddleware;
